@@ -1,6 +1,6 @@
 package ingue.kakaopay.housingfinance.guarantee.domain;
 
-import ingue.kakaopay.housingfinance.institution.domain.Institutions;
+import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,28 +16,30 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @SequenceGenerator(
-    name = "Guarantees_SEQ_GENERATOR",
-    sequenceName = "Guarantees_SEQ"
+    name = "Guarantee_SEQ_GENERATOR",
+    sequenceName = "Guarantee_SEQ"
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Guarantees {
+public class Guarantee {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE,
-      generator = "Guarantees_SEQ_GENERATOR")
+      generator = "Guarantee_SEQ_GENERATOR")
   @Column(name = "guarantee_id")
   private Long id;
 
   private int year;
   private int month;
+  private int money;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Institution_code")
-  private Institutions institution;
+  private Institution institution;
 
-  public Guarantees(int year, int month) {
+  public Guarantee(int year, int month, int money) {
     this.year = year;
     this.month = month;
+    this.money = money;
   }
 }
