@@ -39,6 +39,30 @@ public class CsvBufferedReader implements CsvReader {
     return dataMap;
   }
 
+  private BufferedReader initReader(InputStream inputStream) {
+    return new BufferedReader(new InputStreamReader(inputStream));
+  }
+
+  private Map<Integer, Institution> readHeader(BufferedReader br) throws IOException {
+    Map<Integer, Institution> headerMap = new HashMap<>();
+
+    String line = br.readLine();
+    if (line == null) {
+      throw new RuntimeException("file header isn't exist");
+    }
+
+    String[] split = line.split(",");
+
+    for (int i = 2; i < split.length; i++) {
+      String institutionName = csvParser.parseHeaderData(split[i]);
+
+      Institution institution = new Institution(institutionName);
+      headerMap.put(i, institution);
+    }
+
+    return headerMap;
+  }
+
   private Map<Institution, List<Guarantee>> readBody(BufferedReader br,
       Map<Integer, Institution> headerMap) throws IOException {
     Map<Institution, List<Guarantee>> dataMap = initDataMap(headerMap);
@@ -94,29 +118,5 @@ public class CsvBufferedReader implements CsvReader {
         guaranteeList.add(guarantee);
       }
     }
-  }
-
-  private Map<Integer, Institution> readHeader(BufferedReader br) throws IOException {
-    Map<Integer, Institution> headerMap = new HashMap<>();
-
-    String line = br.readLine();
-    if (line == null) {
-      throw new RuntimeException("file header isn't exist");
-    }
-
-    String[] split = line.split(",");
-
-    for (int i = 2; i < split.length; i++) {
-      String institutionName = csvParser.parseHeaderData(split[i]);
-
-      Institution institution = new Institution(institutionName);
-      headerMap.put(i, institution);
-    }
-
-    return headerMap;
-  }
-
-  private BufferedReader initReader(InputStream inputStream) {
-    return new BufferedReader(new InputStreamReader(inputStream));
   }
 }
