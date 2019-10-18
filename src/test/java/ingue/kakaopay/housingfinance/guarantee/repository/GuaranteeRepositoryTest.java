@@ -23,8 +23,12 @@ public class GuaranteeRepositoryTest {
   }
 
   @Test
-  public void institution_삽입_테스트() {
-    Guarantee guarantee = new Guarantee(2015, 2, 2540);
+  public void Guarantee_객체하나삽입하면_사이즈1() {
+    Guarantee guarantee = Guarantee.builder()
+        .year(2015)
+        .month(2)
+        .money(2540)
+        .build();
 
     guaranteeRepository.save(guarantee);
 

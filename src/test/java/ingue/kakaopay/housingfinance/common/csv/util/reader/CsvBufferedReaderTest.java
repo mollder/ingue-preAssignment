@@ -1,7 +1,8 @@
-package ingue.kakaopay.housingfinance.common.csv.reader;
+package ingue.kakaopay.housingfinance.common.csv.util.reader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import java.io.IOException;
@@ -17,8 +18,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CsvBufferedReader.class)
-public class CsvReaderTest {
+@SpringBootTest(classes = {CsvBufferedReader.class, CsvParser.class})
+public class CsvBufferedReaderTest {
 
   @Autowired
   private CsvReader csvReader;

@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @SequenceGenerator(
@@ -18,7 +19,8 @@ import lombok.NoArgsConstructor;
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(of = {"name","code"})
+@EqualsAndHashCode(of = {"name"})
+@ToString
 public class Institution {
 
   @Id

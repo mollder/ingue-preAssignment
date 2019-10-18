@@ -11,8 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @SequenceGenerator(
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(exclude = "institution")
 public class Guarantee {
 
   @Id
@@ -37,9 +40,14 @@ public class Guarantee {
   @JoinColumn(name = "Institution_code")
   private Institution institution;
 
-  public Guarantee(int year, int month, int money) {
+  @Builder
+  private Guarantee(int year, int month, int money) {
     this.year = year;
     this.month = month;
     this.money = money;
+  }
+
+  public void setInstitution(Institution institution) {
+    this.institution = institution;
   }
 }
