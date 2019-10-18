@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = {"name","code"})
 public class Institution {
 
   @Id
@@ -25,6 +27,7 @@ public class Institution {
   @Column(name = "Institution_code")
   private Long code;
 
+  @Column(unique = true)
   private String name;
 
   public Institution(String name) {
