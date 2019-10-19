@@ -1,6 +1,7 @@
 package ingue.kakaopay.housingfinance.common.csv.util.reader;
 
 import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
+import ingue.kakaopay.housingfinance.common.csv.vo.CsvVO;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import java.io.BufferedReader;
@@ -26,17 +27,32 @@ public class CsvBufferedReader implements CsvReader {
     this.csvParser = csvParser;
   }
 
-  public Map<Institution, List<Guarantee>> read(InputStream stream) {
-    Map<Institution, List<Guarantee>> dataMap = new HashMap<>();
+  public CsvVO read(InputStream stream) {
+    List<Guarantee> guaranteeList = null;
+    List<Institution> institutionList = null;
 
     try (BufferedReader br = initReader(stream)) {
       Map<Integer, Institution> headerMap = readHeader(br);
-      dataMap = readBody(br, headerMap);
+
+      institutionList = getInstitutionList(headerMap);
+      guaranteeList = readBody(br, headerMap);
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    return dataMap;
+    return new CsvVO(guaranteeList, institutionList);
+  }
+
+  private List<Institution> getInstitutionList(Map<Integer, Institution> headerMap) {
+    List<Institution> institutionList = new ArrayList<>();
+
+    Set<Integer> keySet = headerMap.keySet();
+
+    for (int key : keySet) {
+      institutionList.add(headerMap.get(key));
+    }
+
+    return institutionList;
   }
 
   private BufferedReader initReader(InputStream inputStream) {
@@ -45,8 +61,8 @@ public class CsvBufferedReader implements CsvReader {
 
   private Map<Integer, Institution> readHeader(BufferedReader br) throws IOException {
     Map<Integer, Institution> headerMap = new HashMap<>();
-
     String line = br.readLine();
+
     if (line == null) {
       throw new RuntimeException("file header isn't exist");
     }
@@ -63,33 +79,21 @@ public class CsvBufferedReader implements CsvReader {
     return headerMap;
   }
 
-  private Map<Institution, List<Guarantee>> readBody(BufferedReader br,
+  private List<Guarantee> readBody(BufferedReader br,
       Map<Integer, Institution> headerMap) throws IOException {
-    Map<Institution, List<Guarantee>> dataMap = initDataMap(headerMap);
+    List<Guarantee> guaranteeList = new ArrayList<>();
 
     String line = br.readLine();
 
     while (line != null) {
-      handleLine(line, dataMap, headerMap);
+      handleLine(line, guaranteeList, headerMap);
       line = br.readLine();
     }
 
-    return dataMap;
+    return guaranteeList;
   }
 
-  private Map<Institution, List<Guarantee>> initDataMap(Map<Integer, Institution> headerMap) {
-    Map<Institution, List<Guarantee>> dataMap = new HashMap<>();
-
-    Set<Integer> indexSet = headerMap.keySet();
-
-    for (int index : indexSet) {
-      dataMap.put(headerMap.get(index), new ArrayList<>());
-    }
-
-    return dataMap;
-  }
-
-  private void handleLine(String line, Map<Institution, List<Guarantee>> dataMap,
+  private void handleLine(String line, List<Guarantee> guaranteeList,
       Map<Integer, Institution> headerMap) {
     String[] split = line.split(",");
 
@@ -114,7 +118,6 @@ public class CsvBufferedReader implements CsvReader {
       if (institution != null) {
         guarantee.setInstitution(institution);
 
-        List<Guarantee> guaranteeList = dataMap.get(institution);
         guaranteeList.add(guarantee);
       }
     }

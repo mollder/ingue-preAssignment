@@ -26,7 +26,7 @@ public class CsvParser {
    * csv내 돈 데이터들 형식을 숫자로 바꿔주는 메소드
    *
    * ex) "3,234" --> 3234
-   * @param input
+   *
    * @return 변환된 금액
    */
   public int parseBodyData(String input) {
@@ -43,13 +43,13 @@ public class CsvParser {
    * csv 파일 헤더에 금융기관 이름들을 변환시켜주는 메소드
    *
    * ex) 주택도시기금1)(억원) --> 주택도시기금
-   * @param input
+   *
    * @return 변환된 금융기관 이름
    */
   public String parseHeaderData(String input) {
     String result = input;
 
-    for(String replace : this.replaceHeaderList) {
+    for (String replace : this.replaceHeaderList) {
       result = result.replaceAll(replace, "");
     }
 
