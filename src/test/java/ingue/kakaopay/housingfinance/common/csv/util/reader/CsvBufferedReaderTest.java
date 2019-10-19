@@ -26,6 +26,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CsvBufferedReaderTest {
@@ -36,7 +38,7 @@ public class CsvBufferedReaderTest {
   @Mock
   private CsvParser csvParser;
 
-  private InputStream inputStream;
+  private MultipartFile multipartFile;
 
   @Before
   public void setUp() throws IOException {
@@ -47,13 +49,14 @@ public class CsvBufferedReaderTest {
 
     MockitoAnnotations.initMocks(this);
 
-    ClassPathResource resource = new ClassPathResource("data/testHeader.csv");
-    inputStream = resource.getInputStream();
+    ClassPathResource resource = new ClassPathResource("data/testData.csv");
+    InputStream inputStream = resource.getInputStream();
+    multipartFile = new MockMultipartFile("file", resource.getFilename(), null, inputStream);
   }
 
   @Test
-  public void csv_테스트헤더데이터_읽었을때_헤더사이즈는2() throws IOException {
-    CsvVO csvVO = csvReader.read(inputStream);
+  public void csv_테스트데이터_읽었을때_헤더사이즈는2() throws IOException {
+    CsvVO csvVO = csvReader.read(multipartFile);
     List<Institution> institutionSet = csvVO.getInstitutionList();
 
     assertThat(institutionSet.size()).isEqualTo(2);
@@ -61,7 +64,7 @@ public class CsvBufferedReaderTest {
 
   @Test
   public void csv_테스트데이터_읽었을때_헤더리스트내_주택도시기금이존재() throws IOException {
-    CsvVO csvVO = csvReader.read(inputStream);
+    CsvVO csvVO = csvReader.read(multipartFile);
     List<Institution> institutionList = csvVO.getInstitutionList();
 
     assertThat(institutionList.contains(new Institution("주택도시기금"))).isTrue();
@@ -69,7 +72,7 @@ public class CsvBufferedReaderTest {
 
   @Test
   public void csv_테스트데이터_읽었을때_모든기관데이터_금액은2003() throws IOException {
-    CsvVO csvVO = csvReader.read(inputStream);
+    CsvVO csvVO = csvReader.read(multipartFile);
     List<Guarantee> guaranteeList = csvVO.getGuaranteeList();
 
     for (Guarantee guarantee : guaranteeList) {
@@ -111,5 +114,26 @@ public class CsvBufferedReaderTest {
 
     assertThat(guaranteeList.get(0).getMoney()).isEqualTo(2003);
     assertThat(guaranteeList.get(1).getMoney()).isEqualTo(2004);
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void 파일확장자가_csv가_아닐때_런타임exception발생() throws IOException {
+    ClassPathResource resource = new ClassPathResource("data/invalidFile.txt");
+    InputStream inputStream = resource.getInputStream();
+    multipartFile = new MockMultipartFile("file", resource.getFilename(), null, inputStream);
+
+    csvReader.read(multipartFile);
+  }
+
+  @Test
+  public void 파일확장자가_csv일때_true반환()
+      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    Method method = csvReader.getClass()
+        .getDeclaredMethod("isCsvFile", String.class);
+    method.setAccessible(true);
+
+    boolean result = (boolean) method.invoke(csvReader, multipartFile.getOriginalFilename());
+
+    assertThat(result).isTrue();
   }
 }

@@ -22,7 +22,7 @@ import lombok.ToString;
     sequenceName = "Guarantee_SEQ"
 )
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @ToString(exclude = "institution")
 public class Guarantee {
 

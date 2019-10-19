@@ -18,7 +18,7 @@ import lombok.ToString;
     sequenceName = "INSTITUTION_SEQ"
 )
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @EqualsAndHashCode(of = {"name"})
 @ToString
 public class Institution {
@@ -35,5 +35,4 @@ public class Institution {
   public Institution(String name) {
     this.name = name;
   }
-
 }

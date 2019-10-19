@@ -34,5 +34,4 @@ public class GuaranteeRepositoryTest {
 
     assertThat(guaranteeRepository.count()).isEqualTo(1);
   }
-
 }
