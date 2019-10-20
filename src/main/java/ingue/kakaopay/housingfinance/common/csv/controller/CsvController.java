@@ -1,7 +1,8 @@
 package ingue.kakaopay.housingfinance.common.csv.controller;
 
+import ingue.kakaopay.housingfinance.common.csv.pojo.response.UploadCsvDataResponse;
+import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
 import ingue.kakaopay.housingfinance.common.csv.service.CsvService;
-import ingue.kakaopay.housingfinance.common.csv.vo.CsvVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,9 @@ public class CsvController {
   public ResponseEntity uploadCsvData(@RequestParam("file") MultipartFile multipartFile) {
     CsvVO csvVO = csvService.readCsvFile(multipartFile);
 
-    return ResponseEntity.ok(csvVO);
+    UploadCsvDataResponse uploadCsvDataResponse = UploadCsvDataResponse
+        .create(csvVO.getGuaranteeList(), csvVO.getInstitutionList());
+
+    return ResponseEntity.ok(uploadCsvDataResponse);
   }
 }

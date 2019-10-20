@@ -2,7 +2,7 @@ package ingue.kakaopay.housingfinance.common.csv.util.reader;
 
 import ingue.kakaopay.housingfinance.common.FileExtension;
 import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
-import ingue.kakaopay.housingfinance.common.csv.vo.CsvVO;
+import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import java.io.BufferedReader;

@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
-import ingue.kakaopay.housingfinance.common.csv.vo.CsvVO;
+import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import java.io.BufferedReader;
