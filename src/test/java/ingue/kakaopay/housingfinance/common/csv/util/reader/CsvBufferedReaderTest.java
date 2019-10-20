@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,9 +58,9 @@ public class CsvBufferedReaderTest {
   @Test
   public void csv_테스트데이터_읽었을때_헤더사이즈는2() throws IOException {
     CsvVO csvVO = csvReader.read(multipartFile);
-    List<Institution> institutionSet = csvVO.getInstitutionList();
+    List<Institution> institutionList = csvVO.getInstitutionList();
 
-    assertThat(institutionSet.size()).isEqualTo(2);
+    assertThat(institutionList.size()).isEqualTo(2);
   }
 
   @Test

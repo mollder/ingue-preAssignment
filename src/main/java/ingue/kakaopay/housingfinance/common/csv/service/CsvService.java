@@ -1,7 +1,7 @@
 package ingue.kakaopay.housingfinance.common.csv.service;
 
-import ingue.kakaopay.housingfinance.common.csv.util.reader.CsvReader;
 import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
+import ingue.kakaopay.housingfinance.common.csv.util.reader.CsvReader;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.guarantee.service.GuaranteeService;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
@@ -23,9 +23,8 @@ public class CsvService {
   private final CsvReader csvReader;
 
   /**
-   * 업로드한 파일을 받아서
-   * Guarantee, Institution 으로 변환해주는 메소드를 호출한뒤
-   * 변환된 Guarantee, Institution 객체들을 DB에 삽입해주는 메소드
+   * 업로드한 파일을 받아서 Guarantee, Institution 으로 변환해주는 메소드를 호출한뒤 변환된 Guarantee, Institution 객체들을 DB에
+   * 삽입해주는 메소드
    *
    * @param multipartFile 업로드한 파일
    * @return DB에 저장된 Guarantee, Institution 객체들

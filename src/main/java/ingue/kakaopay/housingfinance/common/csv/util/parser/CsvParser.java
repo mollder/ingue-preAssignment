@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Csv 파일 내 문자열을 파싱해주는 클래스
- *
+ * <p>
  * Header 형식, 본문 숫자 형식을 변환시켜주는 역할을 맡고 있다.
  */
 @Component
@@ -24,7 +24,7 @@ public class CsvParser {
 
   /**
    * csv내 돈 데이터들 형식을 숫자로 바꿔주는 메소드
-   *
+   * <p>
    * ex) "3,234" --> 3234
    *
    * @return 변환된 금액
@@ -41,7 +41,7 @@ public class CsvParser {
 
   /**
    * csv 파일 헤더에 금융기관 이름들을 변환시켜주는 메소드
-   *
+   * <p>
    * ex) 주택도시기금1)(억원) --> 주택도시기금
    *
    * @return 변환된 금융기관 이름
@@ -58,8 +58,9 @@ public class CsvParser {
 
   /**
    * "5,323"과 같은 문자열을 5323과 같은 숫자로 바꾸기 위해
-   *
+   * <p>
    * " , 과 같이 제거할 문자열 리스트를 반환해주는 메소드
+   *
    * @return 제거할 문자들을 모아놓은 리스트
    */
   private List<String> initReplaceNumList() {
@@ -72,7 +73,9 @@ public class CsvParser {
 
   /**
    * 주택도시기금1)(억원)과 같은 문자를 주택도시기금으로 변경하기 위해
+   * <p>
    * 1) (억원) 과 같은 제거할 문자들의 리스트를 반환해주는 메소드
+   *
    * @return 제거할 문자 리스트
    */
   private List<String> initReplaceHeaderList() {

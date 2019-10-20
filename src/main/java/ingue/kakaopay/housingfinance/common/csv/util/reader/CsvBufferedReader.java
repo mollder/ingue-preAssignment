@@ -1,8 +1,8 @@
 package ingue.kakaopay.housingfinance.common.csv.util.reader;
 
 import ingue.kakaopay.housingfinance.common.FileExtension;
-import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
 import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
+import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
 import java.io.BufferedReader;
@@ -126,7 +126,7 @@ public class CsvBufferedReader implements CsvReader {
   /**
    * 파일 본문 내용을 읽고 본문 내용을 Guarantee 객체 리스트로 변환한 뒤 돌려주는 메소드
    *
-   * @param br 업로드 파일로 생성한 BufferedReader
+   * @param br        업로드 파일로 생성한 BufferedReader
    * @param headerMap 파일 내 기관 위치, 객체 등을 저장한 map
    * @return Guarantee 객체 리스트
    */
@@ -147,9 +147,9 @@ public class CsvBufferedReader implements CsvReader {
   /**
    * 파일 내용중 한줄에 대한 문자열을 받아서 문자열 내용을 Guarantee 객체로 변환한 뒤 파라미터로 받은 리스트에 삽입해주는 메소드
    *
-   * @param line 파일 내용중 일부 한줄
+   * @param line          파일 내용중 일부 한줄
    * @param guaranteeList guarantee 객체 리스트
-   * @param headerMap 파일 내 기관 위치 기관 객체정보가 담긴 map
+   * @param headerMap     파일 내 기관 위치 기관 객체정보가 담긴 map
    */
   private void handleLine(String line, List<Guarantee> guaranteeList,
       Map<Integer, Institution> headerMap) {

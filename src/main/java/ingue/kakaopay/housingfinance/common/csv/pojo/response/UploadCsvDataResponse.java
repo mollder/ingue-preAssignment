@@ -6,8 +6,7 @@ import java.util.List;
 import lombok.Getter;
 
 /**
- * 금융 데이터 csv 파일 업로드 api 관련
- * response 객체
+ * 금융 데이터 csv 파일 업로드 api 관련 response 객체
  */
 @Getter
 public class UploadCsvDataResponse {

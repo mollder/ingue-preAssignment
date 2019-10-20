@@ -3,6 +3,7 @@ package ingue.kakaopay.housingfinance.guarantee.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,8 @@ public class GuaranteeRepositoryTest {
 
     guaranteeRepository.save(guarantee);
 
-    assertThat(guaranteeRepository.count()).isEqualTo(1);
+    List<Guarantee> guaranteeList = this.guaranteeRepository.findAll();
+
+    assertThat(guaranteeList.size()).isEqualTo(1);
   }
 }
