@@ -1,6 +1,7 @@
 package ingue.kakaopay.housingfinance.guarantee.controller;
 
 import ingue.kakaopay.housingfinance.guarantee.pojo.LargestGuaranteeInstitutionByYear;
+import ingue.kakaopay.housingfinance.guarantee.pojo.MinAndMaxAvgGuaranteesByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.TotalGuaranteeByYear;
 import ingue.kakaopay.housingfinance.guarantee.response.GetTotalGuaranteeByYearResponse;
 import ingue.kakaopay.housingfinance.guarantee.service.GuaranteeService;
@@ -46,5 +47,20 @@ public class GuaranteeController {
         .getLargestGuaranteeInstitutionByYear();
 
     return ResponseEntity.ok(largestGuaranteeInstitutionByYear);
+  }
+
+  /**
+   * 외환은행의 2005년부터 2016년까지
+   * 년도별 보증금액 평균 중
+   * 최솟값과 최댓값을 돌려주는 api
+   *
+   * @return 년도별 평균 최솟값 및 최댓값
+   */
+  @GetMapping(value = "/minmaxavgguarantee")
+  public ResponseEntity getMinMaxAvgKoreanExchangeBankFrom2005To2016() {
+    MinAndMaxAvgGuaranteesByYear minAndMaxAvgGuaranteesByYear = guaranteeService
+        .minAndMaxAvgForeignExchangeBankFrom2005To2016();
+
+    return ResponseEntity.ok(minAndMaxAvgGuaranteesByYear);
   }
 }

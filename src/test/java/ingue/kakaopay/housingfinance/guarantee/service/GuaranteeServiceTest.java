@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
+import ingue.kakaopay.housingfinance.guarantee.pojo.AvgAmountByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.InstitutionMoney;
 import ingue.kakaopay.housingfinance.guarantee.pojo.LargestGuaranteeInstitutionByYear;
+import ingue.kakaopay.housingfinance.guarantee.pojo.MinAndMaxAvgGuaranteesByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.TotalGuaranteeByYear;
 import ingue.kakaopay.housingfinance.guarantee.repository.GuaranteeRepository;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
@@ -34,10 +36,12 @@ public class GuaranteeServiceTest {
   public void setUp() {
     Institution institution = new Institution("인규은행");
     Institution institution2 = new Institution("카카오뱅크");
+    Institution institution3 = new Institution("외환은행");
 
     List<Institution> institutionList = new ArrayList<>();
     institutionList.add(institution);
     institutionList.add(institution2);
+    institutionList.add(institution3);
 
     List<Guarantee> guaranteeList = new ArrayList<>();
 
@@ -49,7 +53,7 @@ public class GuaranteeServiceTest {
             .money(money)
             .build();
 
-        guarantee.setInstitution(institutionList.get(money % 2));
+        guarantee.setInstitution(institutionList.get(money % 3));
         guaranteeList.add(guarantee);
       }
     }
@@ -61,11 +65,11 @@ public class GuaranteeServiceTest {
   }
 
   @Test
-  public void 샘플데이터를처리했을때_년도별_가장큰금액을지원한_기관과년도는_인규은행_2013년() {
+  public void 샘플데이터를처리했을때_년도별_가장큰금액을지원한_기관과년도는_외환은행_2013년() {
     LargestGuaranteeInstitutionByYear largestGuaranteeInstitutionByYear = guaranteeService
         .getLargestGuaranteeInstitutionByYear();
 
-    assertThat(largestGuaranteeInstitutionByYear.getBank()).isEqualTo("인규은행");
+    assertThat(largestGuaranteeInstitutionByYear.getBank()).isEqualTo("외환은행");
     assertThat(largestGuaranteeInstitutionByYear.getYear()).isEqualTo(2013);
   }
 
@@ -87,12 +91,12 @@ public class GuaranteeServiceTest {
       InstitutionMoney institutionMoney = detailAmount.get(0);
 
       assertThat(institutionMoney.getInstitutionName()).isEqualTo("인규은행");
-      assertThat(institutionMoney.getMoney()).isEqualTo(22550);
+      assertThat(institutionMoney.getMoney()).isEqualTo(14343);
 
       InstitutionMoney institutionMoney2 = detailAmount.get(1);
 
       assertThat(institutionMoney2.getInstitutionName()).isEqualTo("카카오뱅크");
-      assertThat(institutionMoney2.getMoney()).isEqualTo(20500);
+      assertThat(institutionMoney2.getMoney()).isEqualTo(14350);
     }
   }
 

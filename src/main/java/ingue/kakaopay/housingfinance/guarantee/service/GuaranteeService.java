@@ -1,8 +1,10 @@
 package ingue.kakaopay.housingfinance.guarantee.service;
 
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
+import ingue.kakaopay.housingfinance.guarantee.pojo.AvgAmountByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.InstitutionMoney;
 import ingue.kakaopay.housingfinance.guarantee.pojo.LargestGuaranteeInstitutionByYear;
+import ingue.kakaopay.housingfinance.guarantee.pojo.MinAndMaxAvgGuaranteesByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.TotalGuaranteeByYear;
 import ingue.kakaopay.housingfinance.guarantee.repository.GuaranteeRepository;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
@@ -128,5 +130,31 @@ public class GuaranteeService {
     }
 
     return exist;
+  }
+
+  /**
+   * 외환은행의 2005년부터 2016년까지
+   * 년도별 보증금액 평균 중
+   * 최솟값과 최댓값을 돌려주는 메소드
+   *
+   * @return 년도별 평균 최솟값 및 최댓값
+   */
+  public MinAndMaxAvgGuaranteesByYear minAndMaxAvgForeignExchangeBankFrom2005To2016() {
+    String institutionName = "외환은행";
+    int startYear = 2005;
+    int endYear = 2016;
+
+    List<AvgAmountByYear> avgAmountByYearList = new ArrayList<>();
+
+    AvgAmountByYear max = guaranteeRepository
+        .findMaxAvgAmountByInstitutionNameBetweenYear(institutionName, startYear, endYear);
+    AvgAmountByYear min = guaranteeRepository
+        .findMinAvgAmountByInstitutionNameBetweenYear(institutionName, startYear, endYear);
+
+    avgAmountByYearList.add(min);
+    avgAmountByYearList.add(max);
+
+    return MinAndMaxAvgGuaranteesByYear
+        .create(institutionName, avgAmountByYearList);
   }
 }

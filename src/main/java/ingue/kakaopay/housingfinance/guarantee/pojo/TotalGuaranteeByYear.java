@@ -3,11 +3,13 @@ package ingue.kakaopay.housingfinance.guarantee.pojo;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 년도별 각 금융기관의 지원금액 합계 api를 나타내는 클래스
  */
 @Getter
+@ToString
 public class TotalGuaranteeByYear {
 
   private int year;

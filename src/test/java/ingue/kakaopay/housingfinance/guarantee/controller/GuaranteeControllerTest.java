@@ -102,4 +102,31 @@ public class GuaranteeControllerTest {
             .value("카카오뱅크"))
         .andExpect(jsonPath("$.totalGuaranteeByYearList[2].detailAmount[1].money").value(20500));
   }
+
+  @Test
+  public void 테스트데이터를넣었을때_외환은행의_년도별평균금액의_최소는2005최대는2016() throws Exception {
+    Institution institution = new Institution("외환은행");
+    institutionRepository.save(institution);
+
+    for (int year = 2005; year <= 2016; year++) {
+      Guarantee guarantee = Guarantee.builder()
+          .year(year)
+          .money(1)
+          .money(year)
+          .build();
+
+      guarantee.setInstitution(institution);
+
+      guaranteeRepository.save(guarantee);
+    }
+
+    mockMvc.perform(get("/minmaxavgguarantee"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.bank").value("외환은행"))
+        .andExpect(jsonPath("$.supportAmount[0].year").value(2005))
+        .andExpect(jsonPath("$.supportAmount[0].amount").value(2005))
+        .andExpect(jsonPath("$.supportAmount[1].year").value(2016))
+        .andExpect(jsonPath("$.supportAmount[1].amount").value(2016));
+  }
 }
