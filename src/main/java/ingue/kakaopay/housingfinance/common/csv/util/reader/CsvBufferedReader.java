@@ -1,5 +1,6 @@
 package ingue.kakaopay.housingfinance.common.csv.util.reader;
 
+import com.opencsv.CSVReader;
 import ingue.kakaopay.housingfinance.common.FileExtension;
 import ingue.kakaopay.housingfinance.common.csv.pojo.vo.CsvVO;
 import ingue.kakaopay.housingfinance.common.csv.util.parser.CsvParser;
@@ -87,15 +88,11 @@ public class CsvBufferedReader implements CsvReader {
    */
   private Map<Integer, Institution> readHeader(BufferedReader br) throws IOException {
     Map<Integer, Institution> headerMap = new HashMap<>();
-    String line = br.readLine();
 
-    if (line == null) {
-      throw new RuntimeException("file header isn't exist");
-    }
+    CSVReader csvReader = new CSVReader(br);
+    String[] split = csvReader.readNext();
 
-    String[] split = line.split(",");
-
-    for (int i = 2; i < split.length; i++) {
+    for (int i = 2; i < split.length && !split[i].equals(""); i++) {
       String institutionName = csvParser.parseHeaderData(split[i]);
 
       Institution institution = new Institution(institutionName);
@@ -134,11 +131,12 @@ public class CsvBufferedReader implements CsvReader {
       Map<Integer, Institution> headerMap) throws IOException {
     List<Guarantee> guaranteeList = new ArrayList<>();
 
-    String line = br.readLine();
+    CSVReader csvReader = new CSVReader(br);
+    String[] split = csvReader.readNext();
 
-    while (line != null) {
-      handleLine(line, guaranteeList, headerMap);
-      line = br.readLine();
+    while (split != null) {
+      handleLine(split, guaranteeList, headerMap);
+      split = csvReader.readNext();
     }
 
     return guaranteeList;
@@ -151,18 +149,14 @@ public class CsvBufferedReader implements CsvReader {
    * @param guaranteeList guarantee 객체 리스트
    * @param headerMap     파일 내 기관 위치 기관 객체정보가 담긴 map
    */
-  private void handleLine(String line, List<Guarantee> guaranteeList,
+  private void handleLine(String[] split, List<Guarantee> guaranteeList,
       Map<Integer, Institution> headerMap) {
-    String[] split = line.split(",");
-
-    if (split.length <= 2) {
-      throw new RuntimeException("data body format is invalid");
-    }
-
     int year = Integer.parseInt(split[0]);
     int month = Integer.parseInt(split[1]);
 
-    for (int i = 2; i < split.length; i++) {
+    for (int i = 2; i < split.length && !split[i].equals(""); i++) {
+      if(split[i].equals("")) continue;
+
       int money = csvParser.parseBodyData(split[i]);
 
       Guarantee guarantee = Guarantee.builder()

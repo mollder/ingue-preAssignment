@@ -28,6 +28,8 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    compile group: 'com.opencsv', name: 'opencsv', version: '4.5'
 }
 
 def querydslSrcDir = 'src/main/generated'
