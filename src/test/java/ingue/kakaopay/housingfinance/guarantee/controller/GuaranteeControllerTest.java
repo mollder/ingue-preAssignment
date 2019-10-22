@@ -37,8 +37,8 @@ public class GuaranteeControllerTest {
 
   @Before
   public void setUp() {
-    institutionRepository.deleteAll();
     guaranteeRepository.deleteAll();
+    institutionRepository.deleteAll();
 
     Institution institution = new Institution("인규은행");
     Institution institution2 = new Institution("카카오뱅크");
@@ -62,6 +62,15 @@ public class GuaranteeControllerTest {
         guaranteeRepository.save(guarantee);
       }
     }
+  }
+
+  @Test
+  public void 년도별_각금융기관중_지원금액이가장큰_금융기관_조회_api테스트() throws Exception {
+    mockMvc.perform(get("/largestguarantee"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.year").value(2013))
+        .andExpect(jsonPath("$.bank").value("인규은행"));
   }
 
   @Test

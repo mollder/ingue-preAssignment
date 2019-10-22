@@ -23,5 +23,4 @@ public class GetTotalGuaranteeByYearResponse {
   public static GetTotalGuaranteeByYearResponse create(List<TotalGuaranteeByYear> totalGuaranteeByYearList) {
     return new GetTotalGuaranteeByYearResponse(totalGuaranteeByYearList);
   }
-
 }

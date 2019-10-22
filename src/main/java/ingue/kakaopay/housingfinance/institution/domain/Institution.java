@@ -18,7 +18,7 @@ import lombok.ToString;
     sequenceName = "INSTITUTION_SEQ"
 )
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = {"name"})
 @ToString
 public class Institution {

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import ingue.kakaopay.housingfinance.guarantee.domain.Guarantee;
 import ingue.kakaopay.housingfinance.guarantee.pojo.InstitutionMoney;
+import ingue.kakaopay.housingfinance.guarantee.pojo.LargestGuaranteeInstitutionByYear;
 import ingue.kakaopay.housingfinance.guarantee.pojo.TotalGuaranteeByYear;
 import ingue.kakaopay.housingfinance.guarantee.repository.GuaranteeRepository;
 import ingue.kakaopay.housingfinance.institution.domain.Institution;
@@ -57,6 +58,15 @@ public class GuaranteeServiceTest {
         .thenReturn(guaranteeList);
 
     MockitoAnnotations.initMocks(this);
+  }
+
+  @Test
+  public void 샘플데이터를처리했을때_년도별_가장큰금액을지원한_기관과년도는_인규은행_2013년() {
+    LargestGuaranteeInstitutionByYear largestGuaranteeInstitutionByYear = guaranteeService
+        .getLargestGuaranteeInstitutionByYear();
+
+    assertThat(largestGuaranteeInstitutionByYear.getBank()).isEqualTo("인규은행");
+    assertThat(largestGuaranteeInstitutionByYear.getYear()).isEqualTo(2013);
   }
 
   @Test

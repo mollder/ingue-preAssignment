@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GuaranteeRepositoryTest {
 
   @Autowired
@@ -21,8 +27,8 @@ public class GuaranteeRepositoryTest {
 
   @Before
   public void setUp() {
-    institutionRepository.deleteAll();
     guaranteeRepository.deleteAll();
+    institutionRepository.deleteAll();
 
     Institution institution = new Institution("인규은행");
     Institution institution2 = new Institution("카카오뱅크");
@@ -46,13 +52,6 @@ public class GuaranteeRepositoryTest {
         guaranteeRepository.save(guarantee);
       }
     }
-  }
-
-  @Test
-  public void guarantee객체3개삽입후_findAll메소드실행시_3개객체반환() {
-    List<Guarantee> guaranteeList = guaranteeRepository.findAll();
-
-    assertThat(guaranteeList.size()).isEqualTo(3);
   }
 
   @Test
