@@ -66,7 +66,7 @@ public class GuaranteeControllerTest {
 
   @Test
   public void 년도별_각금융기관중_지원금액이가장큰_금융기관_조회_api테스트() throws Exception {
-    mockMvc.perform(get("/largestguarantee"))
+    mockMvc.perform(get("/largest-guarantee"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.year").value(2013))
@@ -75,7 +75,7 @@ public class GuaranteeControllerTest {
 
   @Test
   public void 년도별_각금융기관_지원금액합계_조회api테스트() throws Exception {
-    mockMvc.perform(get("/totalguarantees"))
+    mockMvc.perform(get("/total-guarantee"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name").value("년도별 각 금융기관 지원금액 합계"))
@@ -120,7 +120,7 @@ public class GuaranteeControllerTest {
       guaranteeRepository.save(guarantee);
     }
 
-    mockMvc.perform(get("/minmaxavgguarantee"))
+    mockMvc.perform(get("/minmax-guarantee"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.bank").value("외환은행"))
