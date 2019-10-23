@@ -94,9 +94,10 @@ Guarantee 객체에서만 Institution 객체를 단방향으로 가지고 있는
 
 <https://drive.google.com/open?id=1J2UkmeW6NeJDbKTglcQlAC1os0U5VTjL>  
   
-  --> 해당파일을 다운로드 받은 뒤 java -jar 파일이름 을 통해서 빌드 가능
+  --> 해당파일을 다운로드 받은 뒤 java -jar 파일이름 을 통해서 실행 가능
   
  - swagger를 통한 api 조회  
    
  --> api를 swagger를 통해서 조회 및 테스트 해볼 수 있도록 설정   
+   
  --> localhost:8000/swagger-ui.html 로 접속 후 api 조회 및 테스트 가능  
