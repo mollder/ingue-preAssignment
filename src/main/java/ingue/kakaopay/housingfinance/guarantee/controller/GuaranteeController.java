@@ -8,14 +8,18 @@ import ingue.kakaopay.housingfinance.guarantee.service.GuaranteeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Guarantee 관련 api 컨트롤러 클래스
  */
 @RestController
+@RequestMapping("/")
 @RequiredArgsConstructor
+@CrossOrigin
 public class GuaranteeController {
 
   private final GuaranteeService guaranteeService;

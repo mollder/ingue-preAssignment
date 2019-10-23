@@ -6,13 +6,15 @@ import ingue.kakaopay.housingfinance.institution.service.InstitutionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Institution api 관련 컨트롤러
  */
-@RestController(value = "/institutions")
+@CrossOrigin
+@RestController("/")
 @RequiredArgsConstructor
 public class InstitutionController {
 
@@ -23,7 +25,7 @@ public class InstitutionController {
    *
    * @return DB에 저장된 모든 금융 기관 목록
    */
-  @GetMapping
+  @GetMapping(value = "/institutions")
   public ResponseEntity findAllInstitutions() {
     List<Institution> institutionList = this.institutionService.findAll();
 
