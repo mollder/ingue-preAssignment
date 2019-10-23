@@ -90,7 +90,9 @@ Guarantee 객체에서만 Institution 객체를 단방향으로 가지고 있는
  
 - jar파일을 통해서 실행하는 방식 
  
-- jar 파일 다운로드 링크 ( 테스트 결과 internet explorer에서 성공적으로 다운로드 가능 )
+- jar 파일 다운로드 링크 ( 테스트 결과 internet explorer에서 성공적으로 다운로드 가능 )  
+
+--> 바이러스 검사때문에 시간이 30초정도 걸릴 수 있습니다.  
 
 <https://drive.google.com/open?id=1J2UkmeW6NeJDbKTglcQlAC1os0U5VTjL>  
   
