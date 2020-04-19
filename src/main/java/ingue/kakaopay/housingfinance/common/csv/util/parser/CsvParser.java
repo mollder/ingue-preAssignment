@@ -5,11 +5,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-/**
- * Csv 파일 내 문자열을 파싱해주는 클래스
- * <p>
- * Header 형식, 본문 숫자 형식을 변환시켜주는 역할을 맡고 있다.
- */
 @Component
 public class CsvParser {
 

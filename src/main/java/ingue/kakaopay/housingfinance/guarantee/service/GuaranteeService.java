@@ -13,30 +13,16 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-/**
- * Guarantee 관련 비즈니스 로직 클래스
- */
 @Service
 @RequiredArgsConstructor
 public class GuaranteeService {
 
   private final GuaranteeRepository guaranteeRepository;
 
-  /**
-   * Guarantee 객체 리스트를 받아서 repository에 모두 삽입하는 메소드를 호출하는 메소드
-   *
-   * @param guaranteeList Guarantee 객체 리스트
-   * @return 삽입한 결과
-   */
   public List<Guarantee> saveAll(List<Guarantee> guaranteeList) {
     return guaranteeRepository.saveAll(guaranteeList);
   }
 
-  /**
-   * 각 년도별 각 기관의 전체 지원금액 중에서 가장 큰 금액의 기관을 돌려주는 메소드
-   *
-   * @return 각 년도별 지원금액 중에서 가장 큰 금액의 기관
-   */
   public LargestGuaranteeInstitutionByYear getLargestGuaranteeInstitutionByYear() {
     List<TotalGuaranteeByYear> totalGuaranteeByYearList = findTotalGuaranteeByYear();
 
@@ -61,11 +47,6 @@ public class GuaranteeService {
     return LargestGuaranteeInstitutionByYear.create(year, bankName);
   }
 
-  /**
-   * Guarantee 객체들을 받아서 년도별로 총 지원 금액, 은행별 개별 지원 금액을 계산해서 돌려주는 메소드
-   *
-   * @return 년도별 지원 금액 리스트
-   */
   public List<TotalGuaranteeByYear> findTotalGuaranteeByYear() {
     List<Guarantee> guaranteeList = guaranteeRepository
         .findAllInnerJoinWithInstitutionOrderByYear();
@@ -93,13 +74,6 @@ public class GuaranteeService {
     return totalGuaranteeByYearList;
   }
 
-  /**
-   * 파라미터로 받은 리스트에 파라미터로 받은 년도와 같은 년도를 가진 객체가 있다면 돌려주는 메소드
-   *
-   * @param year                     비교할년도
-   * @param totalGuaranteeByYearList 년도별 합계 보증 리스트
-   * @return 같은 년도를 가진 TotalGuaranteeByYear 객체
-   */
   private TotalGuaranteeByYear getTotalGuaranteeUseYear(int year,
       List<TotalGuaranteeByYear> totalGuaranteeByYearList) {
     for (TotalGuaranteeByYear totalGuaranteeByYear : totalGuaranteeByYearList) {
@@ -111,13 +85,6 @@ public class GuaranteeService {
     return TotalGuaranteeByYear.create(0, 0, "오류");
   }
 
-  /**
-   * TotalGuaranteeByYear 리스트 안에 인자로 받은 년도와 같은 년도를 가진 객체가 있는지 확인해주는 메소드
-   *
-   * @param year                     년도
-   * @param totalGuaranteeByYearList 년도별 합계 보증 객체리스트
-   * @return 리스트 안에 같은 년도가 있는지 여부
-   */
   private boolean isExistYear(int year,
       List<TotalGuaranteeByYear> totalGuaranteeByYearList) {
     boolean exist = false;
@@ -132,13 +99,6 @@ public class GuaranteeService {
     return exist;
   }
 
-  /**
-   * 외환은행의 2005년부터 2016년까지
-   * 년도별 보증금액 평균 중
-   * 최솟값과 최댓값을 돌려주는 메소드
-   *
-   * @return 년도별 평균 최솟값 및 최댓값
-   */
   public MinAndMaxAvgGuaranteesByYear minAndMaxAvgForeignExchangeBankFrom2005To2016() {
     String institutionName = "외환은행";
     int startYear = 2005;
